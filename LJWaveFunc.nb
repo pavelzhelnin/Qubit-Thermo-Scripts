@@ -1,0 +1,338 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     11448,        328]
+NotebookOptionsPosition[     11094,        314]
+NotebookOutlinePosition[     11489,        330]
+CellTagsIndexPosition[     11446,        327]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", "\[Epsilon]", "]"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"h", "[", 
+      RowBox[{"\[Tau]_", ",", "\[Epsilon]_"}], "]"}], " ", ":=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\[Epsilon]", "*", "\[Tau]"}], ",", "1"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", 
+         RowBox[{
+          RowBox[{"-", "\[Epsilon]"}], "*", "\[Tau]"}]}], "}"}]}], "}"}]}], 
+    ";"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"h", "[", "\[Tau]_", "]"}], " ", ":=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"\[Tau]", ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", 
+        RowBox[{"-", "\[Tau]"}]}], "}"}]}], "}"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"h", "[", "\[Theta]_", "]"}], ":=", 
+     RowBox[{"HH", "*", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Cos", "[", "\[Theta]", "]"}], ",", 
+          RowBox[{"Sin", "[", "\[Theta]", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Sin", "[", "\[Theta]", "]"}], ",", 
+          RowBox[{"-", 
+           RowBox[{"Cos", "[", "\[Theta]", "]"}]}]}], "}"}]}], "}"}]}]}], 
+    ";"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Theta]", "[", "\[Tau]_", "]"}], ":=", 
+  RowBox[{"ArcSin", "[", 
+   RowBox[{"1", "/", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"\[Tau]", "^", "2"}], " ", "+", "1"}], ")"}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Assuming", "[", 
+  RowBox[{
+   RowBox[{"\[Tau]", "\[Element]", "Reals"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"Do", "[", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{"Print", "[", 
+       RowBox[{
+        RowBox[{"h", "[", "\[Tau]", "]"}], "//", "MatrixForm"}], "]"}], ";"}],
+      "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{"Print", "[", 
+       RowBox[{"DiagonalizableMatrixQ", "[", 
+        RowBox[{"h", "[", "\[Tau]", "]"}], "]"}], "]"}], ";"}], "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"e1", ",", "e2"}], "}"}], "=", 
+       RowBox[{"Simplify", "[", 
+        RowBox[{
+         RowBox[{"Normalize", "/@", 
+          RowBox[{"Eigenvectors", "[", 
+           RowBox[{"h", "[", "\[Tau]", "]"}], "]"}]}], ",", 
+         RowBox[{"Assumptions", " ", "->", 
+          RowBox[{"\[Tau]", "\[Element]", "Reals"}]}]}], " ", "]"}]}], ";"}], 
+     "*)"}], "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"evecs", " ", "=", " ", 
+       RowBox[{"Simplify", "[", 
+        RowBox[{
+         RowBox[{"Normalize", "/@", 
+          RowBox[{"Eigenvectors", "[", 
+           RowBox[{"h", "[", "\[Tau]", "]"}], "]"}]}], ",", 
+         RowBox[{"Assumptions", " ", "->", 
+          RowBox[{"\[Tau]", "\[Element]", "Reals"}]}]}], " ", "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"Print", "[", 
+         RowBox[{
+          RowBox[{"evecs", "//", "FullSimplify"}], " ", "//", "MatrixForm"}], 
+         "]"}], ";"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"\[Lambda]1", " ", "=", 
+       RowBox[{"e1", "/.", " ", 
+        RowBox[{"\[Tau]", "->", "0"}]}]}], ";", " ", "\[IndentingNewLine]", 
+      RowBox[{"\[Lambda]2", " ", "=", " ", 
+       RowBox[{"e2", " ", "/.", " ", 
+        RowBox[{"\[Tau]", "->", "0"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"v", "[", "\[Tau]_", "]"}], ":=", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Transpose", "[", 
+            RowBox[{"{", "e1", "}"}], "]"}], ".", 
+           RowBox[{"{", "\[Lambda]1", "}"}]}], " ", "+", " ", 
+          RowBox[{
+           RowBox[{"Transpose", "[", 
+            RowBox[{"{", "e2", "}"}], "]"}], ".", 
+           RowBox[{"{", "\[Lambda]2", "}"}]}]}]}], ";"}], "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"v", "[", "\[Tau]_", "]"}], ":=", 
+       RowBox[{"Transpose", "[", "evecs", "]"}]}], " ", ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Print", "[", 
+       RowBox[{"Simplify", "[", 
+        RowBox[{
+         RowBox[{"Eigenvalues", "[", 
+          RowBox[{"h", "[", "\[Tau]", "]"}], "]"}], ",", 
+         RowBox[{"Assumptions", " ", "->", 
+          RowBox[{"\[Tau]", "\[Element]", "Reals"}]}]}], " ", "]"}], "]"}], ";",
+       "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"Print", "[", 
+         RowBox[{
+          RowBox[{"v", "[", "\[Tau]", "]"}], "//", "MatrixForm"}], "]"}], 
+        ";"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"Print", "[", 
+         RowBox[{
+          RowBox[{"N", "[", 
+           RowBox[{
+            RowBox[{"v", "[", "\[Tau]", "]"}], "/.", " ", 
+            RowBox[{"\[Tau]", "->", "0"}]}], "]"}], "//", "Chop"}], "]"}], 
+        ";"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"Print", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"v", "[", "\[Tau]", "]"}], ".", 
+            RowBox[{"Transpose", "[", 
+             RowBox[{"v", "[", "\[Tau]", "]"}], "]"}]}], " ", "==", 
+           RowBox[{"IdentityMatrix", "[", "2", "]"}]}], "//", "Simplify"}], 
+         "]"}], ";"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"Print", "[", 
+         RowBox[{
+          RowBox[{"Transpose", "[", 
+           RowBox[{"v", "[", "\[Tau]", "]"}], "]"}], ".", 
+          RowBox[{"v", "[", "\[Tau]", "]"}]}], "]"}], ";"}], "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"d", "[", "\[Tau]_", "]"}], ":=", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Transpose", "[", 
+            RowBox[{"v", "[", "\[Tau]", "]"}], "]"}], ".", 
+           RowBox[{"h", "[", "\[Tau]", "]"}], ".", 
+           RowBox[{"v", "[", "\[Tau]", "]"}]}], "//", "ComplexExpand"}]}], 
+        ";"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"d", "[", "\[Tau]_", "]"}], ":=", 
+       RowBox[{"DiagonalMatrix", "[", 
+        RowBox[{"Simplify", "[", 
+         RowBox[{
+          RowBox[{"Eigenvalues", "[", 
+           RowBox[{"h", "[", "\[Tau]", "]"}], "]"}], ",", 
+          RowBox[{"Assumptions", " ", "->", 
+           RowBox[{"\[Tau]", "\[Element]", "Reals"}]}]}], " ", "]"}], "]"}]}],
+       ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"c", "[", "\[Tau]_", "]"}], ":=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", "I"}], "*", 
+         RowBox[{
+          RowBox[{"Transpose", "[", 
+           RowBox[{"v", "[", "\[Tau]", "]"}], "]"}], ".", 
+          RowBox[{"D", "[", 
+           RowBox[{
+            RowBox[{"v", "[", "\[Tau]", "]"}], ",", "\[Tau]"}], "]"}]}]}], "//",
+         "ComplexExpand"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"Print", "[", 
+         RowBox[{
+          RowBox[{"d", "[", "\[Tau]", "]"}], "//", "MatrixForm"}], "]"}], 
+        ";"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Hnew", "[", "\[Tau]_", "]"}], ":=", 
+       RowBox[{
+        RowBox[{"d", "[", "\[Tau]", "]"}], "+", 
+        RowBox[{"c", "[", "\[Tau]", "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Print", "[", "i", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Print", "[", 
+       RowBox[{
+        RowBox[{"N", "[", 
+         RowBox[{
+          RowBox[{"d", "[", "\[Tau]", "]"}], "/.", " ", 
+          RowBox[{"\[Tau]", "->", "1"}]}], " ", "]"}], "//", "Chop"}], "]"}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"Print", "[", 
+         RowBox[{"N", "[", 
+          RowBox[{
+           RowBox[{"c", "[", "\[Tau]", "]"}], "/.", " ", 
+           RowBox[{"\[Tau]", "->", "2"}]}], " ", "]"}], "]"}], ";"}], "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"Print", "[", 
+         RowBox[{
+          RowBox[{"Normal", "[", 
+           RowBox[{"Series", "[", 
+            RowBox[{
+             RowBox[{"Hnew", "[", "\[Tau]", "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"\[Tau]", ",", "0", ",", "2"}], "}"}]}], "]"}], "]"}], "//",
+           "Simplify"}], "]"}], ";"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"q", "[", "x_", "]"}], ":=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"N", "[", 
+           RowBox[{
+            RowBox[{"Norm", "[", 
+             RowBox[{
+              RowBox[{"d", "[", "\[Tau]", "]"}], "/.", 
+              RowBox[{"\[Tau]", "->", "x"}]}], " ", "]"}], ",", "10"}], "]"}],
+           "/", 
+          RowBox[{"N", "[", 
+           RowBox[{
+            RowBox[{"Norm", "[", 
+             RowBox[{
+              RowBox[{"c", "[", "\[Tau]", "]"}], "/.", 
+              RowBox[{"\[Tau]", "->", "x"}]}], " ", "]"}], ",", "10"}], 
+           "]"}]}], " ", "//", "Simplify"}], " ", "//", "Chop"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Qs", " ", "=", " ", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"x", ",", 
+           RowBox[{
+            RowBox[{"q", "[", "x", "]"}], "//", "Chop"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", 
+           RowBox[{
+            RowBox[{"-", "10"}], "+", "0.0001"}], ",", "10.0001", ",", "1"}], 
+          "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"Print", "[", "Qs", "]"}], ";"}], "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"h", "[", "\[Tau]_", "]"}], "=", 
+       RowBox[{"Hnew", "[", "\[Tau]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"Print", "[", "Qs", "]"}], ";"}], "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"h", "[", "\[Tau]_", "]"}], "=", 
+       RowBox[{"Normal", "[", 
+        RowBox[{"Series", "[", 
+         RowBox[{
+          RowBox[{"Hnew", "[", "\[Tau]", "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"\[Tau]", ",", "0", ",", "2"}], "}"}]}], "]"}], "]"}]}], 
+      "*)"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "3"}], "}"}]}], "]"}]}], "]"}]}], "Input",ExpressionUU\
+ID->"3f798184-4a58-4f59-83df-c5551309867c"]
+},
+WindowSize->{808, 687},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"14.2 for Mac OS X ARM (64-bit) (December 26, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"e3670e93-96da-4cf5-977f-9273637085dc"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 10536, 292, 723, "Input",ExpressionUUID->"3f798184-4a58-4f59-83df-c5551309867c"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
