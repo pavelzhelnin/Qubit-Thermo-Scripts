@@ -9,7 +9,7 @@ using ForwardDiff
 # using Groebner 
 # using Symbolics
 
-export SimulationConfig, Deschamps_H, lz!,initialize_sphere,H,σ,many_run_sim, one_run_sim, one_run_superadiabatic_sim
+export SimulationConfig, Deschamps_H, lz!,uniform_initialize_sphere,H,σ,many_run_sim, one_run_sim, one_run_superadiabatic_sim
 
 const σ = [[0 1; 1 0], [0 -im; im 0], [1 0; 0 -1]]
 const σ_x = σ[1]
@@ -90,7 +90,7 @@ end
 #     du[2] = -u[1] * sin(t) * p[2] + im * cos(t) * u[2] * p[1] 
 # end
 
-function initialize_sphere(θmin, θmax, ϕmin, ϕmax,qubits)
+function random_initialize_sphere(θmin, θmax, ϕmin, ϕmax, qubits)
 
     n = qubits
 
@@ -111,10 +111,47 @@ function initialize_sphere(θmin, θmax, ϕmin, ϕmax,qubits)
     return c1,c2
 end
 
+function uniform_initialize_sphere(θmin, θmax, ϕmin, ϕmax, qubits)
+    n = qubits
+
+    u_max = ϕmax/(2*pi)
+    u_min = ϕmin/(2*pi)
+    v_min = (cos(θmin)+1)/2
+    v_max = (cos(θmax)+1)/2
+
+    function meshgrid_nbins(xmin, xmax, ymin, ymax, n::Int)
+
+        xrange = xmax - xmin
+        yrange = ymax - ymin
+        aspect = xrange / yrange
+    
+        ny = Int(round(sqrt(n / aspect)))
+        nx = Int(round(n / ny))
+    
+        x = range(xmin, xmax; length=nx)
+        y = range(ymin, ymax; length=ny)
+    
+        X = repeat(x', ny, 1)
+        Y = repeat(y, 1, nx)
+    
+        return X, Y, x, y
+    end
+
+    uns,vns,_,_ = meshgrid_nbins(0,1,0,1,n)
+    u = u_min .+ (u_max - u_min)*uns
+    v = v_min .+ (v_max - v_min)*vns
+    starting_ϕ = u.*2π
+    starting_θ = acos.(1 .- (2).*v)
+    c1 = cos.(starting_θ ./ 2)
+    c2 = sin.(starting_θ ./ 2) .* exp.(im .* starting_ϕ)
+
+    return c1,c2
+end
+
 
 function many_run_sim(s::SimulationConfig)
     n = s.qubits
-    c1s,c2s = initialize_sphere(s.θmin, s.θmax, s.ϕmin, s.ϕmax, n)
+    c1s,c2s = random_initialize_sphere(s.θmin, s.θmax, s.ϕmin, s.ϕmax, n)
     SX, SY, SZ = [], [], []
     times = [] 
     for (idx,(c1,c2)) in enumerate(zip(c1s,c2s))
@@ -122,7 +159,7 @@ function many_run_sim(s::SimulationConfig)
         tspan = (s.t_i, s.t_f)
         p = [s.α, s.g]
         prob = ODEProblem(lz!, u0, tspan, p; reltol=1e-8)
-        sol = solve(prob, saveat = s.t_i:s.Δt:s.t_f)
+        sol = solve(prob, saveat = s.t_i:s.Δt:s.t_f, maxiters=1e8)
         sx = []
         sy = []
         sz = []
@@ -149,12 +186,12 @@ function one_run_sim(s::SimulationConfig)
         println("Please set qubits to 1 for this function")
         return
     end
-    c1,c2 = initialize_sphere(s.θmin, s.θmax, s.ϕmin, s.ϕmax, 1)
+    c1,c2 = random_initialize_sphere(s.θmin, s.θmax, s.ϕmin, s.ϕmax, 1)
     u0 = ComplexF64[c1; c2;]
     tspan = (s.t_i, s.t_f)
     p = [s.α, s.g]
-    prob = ODEProblem(lz!, u0, tspan, p; reltol=1e-9)
-    sol = solve(prob, saveat = s.t_i:s.Δt:s.t_f)
+    prob = ODEProblem(lz!, u0, tspan, p; reltol=1e-8)
+    sol = solve(prob, saveat = s.t_i:s.Δt:s.t_f, maxiters=1e8)
     return sol
 end
 
